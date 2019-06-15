@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ServiceDiscovery;
 
-namespace DataService
+namespace ServiceDiscovery
 {
     public static class ApplicationBuilderExtensions
     {

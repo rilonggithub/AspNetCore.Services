@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ServiceDiscovery;
 
-namespace DataService
+namespace ServiceDiscovery
 {
     public static class ServiceCollectionExtensions
     {
