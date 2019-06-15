@@ -7,7 +7,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://127.0.0.1:5200"
+      "applicationUrl": "http://127.0.0.1:5200" //这里必须为Ip，不然服务发现会报错
     }
   }
 }

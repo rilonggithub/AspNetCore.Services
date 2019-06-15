@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ServiceDiscovery;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace DataService
@@ -27,6 +28,16 @@ namespace DataService
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            IdentityServerConfig identityServerConfig = new IdentityServerConfig();
+            Configuration.Bind("IdentityServerConfig", identityServerConfig);
+            services.AddAuthentication(identityServerConfig.IdentityScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = $"http://{identityServerConfig.ServerIP}:{identityServerConfig.ServerPort}";
+                    options.ApiName = identityServerConfig.ResourceName;
+                }
+                );
             services.AddMvc();
             services.AddSwaggerGen(opt =>
             {
@@ -49,7 +60,7 @@ namespace DataService
             {
                 c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
             });
-
+            app.UseAuthentication();
             app.UseMvc();
 
             // Autoregister using server.Features (does not work in reverse proxy mode)

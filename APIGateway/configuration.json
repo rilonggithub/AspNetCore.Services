@@ -1,3 +1,127 @@
 ﻿{
-
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/connect/token",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5008
+        }
+      ],
+      "UpstreamPathTemplate": "/token",
+      "UpstreamHttpMethod": [ "Post" ],
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5900
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/OrderService/values",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5200
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/DataService/values",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Priority": 2
+    },
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "OrderService",
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "ReRouteIsCaseSensitive": false,
+      "DelegatingHandlers": [],
+      "Priority": 1,
+      "DangerousAcceptAnyServerCertificateValidator": false
+    },
+    {
+      "DownstreamPathTemplate": "/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5200
+        }
+      ],
+      "UpstreamPathTemplate": "/DataService/values",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "key": "data"
+    },
+    {
+      "DownstreamPathTemplate": "/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5900
+        }
+      ],
+      "UpstreamPathTemplate": "/OrderService/values",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "key": "order"
+    },
+    {
+      "DownstreamPathTemplate": "/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5300
+        }
+      ],
+      "UpstreamPathTemplate": "/CatagoryService/values",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "key": "catagory"
+    }
+  ],
+  "Aggregates": [
+    {
+      "ReRouteKeys": [
+        "data",
+        "order"
+      ],
+      "UpstreamPathTemplate": "/Aggregates"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5700",
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false,
+      "UseProxy": true
+    },
+    "RequestIdKey": "requestid",
+    "ServiceDiscoveryProvider": {
+      "ConfigurationKey": "LogisticsGateway",
+      "Host": "localhost",
+      "PollingInterval": 0,
+      "Port": 8500,
+      "Token": "",
+      "Type": "Consul"
+    }
+  }
 }

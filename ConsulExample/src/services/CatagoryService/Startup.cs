@@ -10,14 +10,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ServiceDiscovery;
 
 namespace CatagoryService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables().Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +30,8 @@ namespace CatagoryService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var conf = Configuration.GetSection("ServiceDiscovery");
+            services.AddServiceDiscovery(conf);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -42,6 +49,7 @@ namespace CatagoryService
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseConsulRegisterService();
         }
     }
 }

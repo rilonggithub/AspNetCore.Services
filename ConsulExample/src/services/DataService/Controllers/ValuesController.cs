@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataService.Controllers
@@ -11,15 +12,16 @@ namespace DataService.Controllers
         private static Random Rnd = new Random();
         private static readonly Dictionary<string, string> _values = new Dictionary<string, string>()
         {
-            {  "a", "Value " + Rnd.Next(10, 1000) },
-            {  "b", "Value " + Rnd.Next(10, 1000) },
-            {  "c", "Value " + Rnd.Next(10, 1000) },
-            {  "d", "Value " + Rnd.Next(10, 1000) },
-            {  "e", "Value " + Rnd.Next(10, 1000) },
-            {  "f", "Value " + Rnd.Next(10, 1000) },
-            {  "g", "Value " + Rnd.Next(10, 1000) },
+            {  "a", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "b", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "c", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "d", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "e", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "f", " from Data Service Value " + Rnd.Next(10, 1000) },
+            {  "g", " from Data Service Value " + Rnd.Next(10, 1000) },
         };
-        
+
+        [Authorize]
         [HttpGet("")]
         public IActionResult Get()
         {

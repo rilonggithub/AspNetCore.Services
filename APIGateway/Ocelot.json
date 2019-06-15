@@ -1,3 +1,34 @@
 ﻿{
-
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5700",
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false,
+      "UseProxy": true
+    },
+    "RequestIdKey": "requestid",
+    "ServiceDiscoveryProvider": {
+      "ConfigurationKey": "LogisticsGateway",
+      "Host": "localhost",
+      "PollingInterval": 0,
+      "Port": 8500,
+      "Token": "",
+      "Type": "Consul"
+    }
+  },
+  "ReRoutes": [
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "DataService",
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "ReRouteIsCaseSensitive": false,
+      "DelegatingHandlers": [],
+      "Priority": 1,
+      "DangerousAcceptAnyServerCertificateValidator": false
+    }
+  ]
 }

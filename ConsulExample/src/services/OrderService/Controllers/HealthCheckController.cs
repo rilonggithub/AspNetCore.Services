@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ordering.API.Controllers
+namespace OrderService.Controllers
 {
     [Route("[Controller]")]
     public class HealthCheckController : Controller

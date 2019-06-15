@@ -1,10 +1,15 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
+
 namespace CatagoryService.Controllers
 {
-    public class HealthCheckController
+    [Route("[Controller]")]
+    public class HealthCheckController:Controller
     {
         public HealthCheckController()
         {
         }
+        [HttpGet("")]
+        public IActionResult Check() => Ok("OK");
     }
 }

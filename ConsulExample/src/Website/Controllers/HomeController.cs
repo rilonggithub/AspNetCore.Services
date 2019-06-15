@@ -20,7 +20,8 @@ namespace Website.Controllers
         {
             var model = new IndexViewModel()
             {
-                DnsResult = await _dns.ResolveServiceAsync("service.consul", "dataservice")
+                DnsResult = await _dns.ResolveServiceAsync("service.consul", "CatagoryService")
+                //DnsResult = await _dns.ResolveServiceAsync("service.consul", "dataservice")
             };
 
             if (model.DnsResult.Length > 0)
@@ -30,7 +31,7 @@ namespace Website.Controllers
 
                 using (var client = new HttpClient())
                 {
-                    model.ServiceResult = await client.GetStringAsync($"http://{firstAddress}:{port}/Values");
+                    model.ServiceResult = await client.GetStringAsync($"http://{firstAddress}:{port}/Values/");
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +18,13 @@ namespace APIGateway
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args).
+            ConfigureAppConfiguration(conbuilder =>
+            {
+                conbuilder.AddJsonFile("configuration.json");
+
+            }).UseKestrel()
+              .UseUrls("http://localhost:5700")
+              .UseStartup<Startup>();
     }
 }
